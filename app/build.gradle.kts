@@ -58,5 +58,10 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.3.0")
     //glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
+    //View Model MVVM
+    val lifecycle_version = "2.4.0-rc01"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+//    implementation("android.arch.lifecycle:extensions:1.1.0")
 
 }
