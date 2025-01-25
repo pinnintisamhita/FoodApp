@@ -1,5 +1,6 @@
 package com.example.foodapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.foodapp.R
+import com.example.foodapp.activities.MealActivity
 import com.example.foodapp.databinding.FragmentHomeBinding
 import com.example.foodapp.pojo.Meal
 import com.example.foodapp.pojo.MealList
@@ -43,6 +45,14 @@ class HomeFragment : Fragment() {
 
            homeMvvm.getRandomMeal()
            observerRandomMeal()
+           onRandomMealClick()
+    }
+    private fun onRandomMealClick()
+    {
+        binding.randomMealCard.setOnClickListener{
+            val intent = Intent(activity,MealActivity::class.java)
+            startActivity(intent)
+        }
     }
     private fun observerRandomMeal()
     {
