@@ -1,6 +1,9 @@
 package com.example.foodapp.activities
 
+import android.content.Intent
+import android.net.Uri
 import  android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -22,6 +25,7 @@ class MealActivity : AppCompatActivity() {
     private lateinit var mealThumb:String
     private lateinit var binding: ActivityMealBinding
     private lateinit var mealMVVM:MealViewModel
+    private lateinit var youTubeLink:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMealBinding.inflate(layoutInflater)
@@ -30,18 +34,29 @@ class MealActivity : AppCompatActivity() {
         getMealInformationFromIntent()
 
         setInformationInViews()
+        loadingCase()
         mealMVVM.getMealDetail(mealId)
         observerMealDetailsLiveData()
+        onYoutubeImageClick()
     }
+
+    private fun onYoutubeImageClick() {
+        binding.imgYoutube.setOnClickListener{
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youTubeLink))
+            startActivity(intent)
+        }
+    }
+
     private fun observerMealDetailsLiveData()
     {
         mealMVVM.observerMealDetailsLiveData().observe(this,object :Observer<Meal>{
             override fun onChanged(value: Meal) {
-
+                onResponseCase()
                 val meal = value
                 binding.tvCategory.text = "Category : ${meal.strCategory}"
                 binding.tvArea.text = "Area :${meal.strArea}"
                 binding.tvInstructionsSteps.text = meal.strInstructions
+                youTubeLink = meal.strYoutube
             }
 
 
@@ -62,6 +77,26 @@ class MealActivity : AppCompatActivity() {
         mealId = intent.getStringExtra(HomeFragment.MEAL_ID)!!
         mealName = intent.getStringExtra(HomeFragment.MEAL_NAME)!!
         mealThumb = intent.getStringExtra(HomeFragment.MEAL_THUMB)!!
+
+    }
+    private fun loadingCase()
+    {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.btnAddToFav.visibility = View.INVISIBLE
+        binding.tvInstructions.visibility = View.INVISIBLE
+        binding.tvCategory.visibility = View.INVISIBLE
+        binding.tvArea.visibility = View.INVISIBLE
+        binding.imgYoutube.visibility = View.INVISIBLE
+
+    }
+    private fun onResponseCase()
+    {
+        binding.progressBar.visibility = View.INVISIBLE
+        binding.btnAddToFav.visibility = View.VISIBLE
+        binding.tvInstructions.visibility = View.VISIBLE
+        binding.tvCategory.visibility = View.VISIBLE
+        binding.tvArea.visibility = View.VISIBLE
+        binding.imgYoutube.visibility = View.VISIBLE
 
     }
 }
