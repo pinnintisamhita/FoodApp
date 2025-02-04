@@ -127,9 +127,6 @@
             android:scrollbars="none"
             />
     </androidx.cardview.widget.CardView>
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
