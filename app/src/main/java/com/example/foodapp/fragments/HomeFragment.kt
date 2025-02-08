@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.foodapp.activities.CategoryMealsActivity
 import com.example.foodapp.activities.MealActivity
 import com.example.foodapp.adapters.CategoriesAdapter
 import com.example.foodapp.adapters.MostPopularAdapter
@@ -30,6 +31,7 @@ class HomeFragment : Fragment() {
        const val MEAL_ID = "com.example.foodapp.fragments.idMeal"
        const val MEAL_NAME = "com.example.foodapp.fragments.nameMeal"
        const val MEAL_THUMB = "com.example.foodapp.fragments.thumbMeal"
+       const val CATEGORY_NAME = "com.example.foodapp.fragments.categoryName"
    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,13 +57,24 @@ class HomeFragment : Fragment() {
            homeMvvm.getRandomMeal()
            observerRandomMeal()
            onRandomMealClick()
+
            homeMvvm.getPopularItems()
            observePopularItemsLiveData()
            onPopularItemClick()
-           homeMvvm.getCategories()
-           observeCategoriesLiveData()
 
            prepareCategoriesRecyclerView()
+           homeMvvm.getCategories()
+           observeCategoriesLiveData()
+           onCategoryClick()
+    }
+
+    private fun onCategoryClick() {
+        categoriesAdapter.onItemClick ={category ->
+            val intent = Intent(activity, CategoryMealsActivity::class.java)
+            intent.putExtra(CATEGORY_NAME,category.strCategory)
+            startActivity(intent)
+
+        }
     }
 
     private fun prepareCategoriesRecyclerView() {
@@ -98,7 +111,7 @@ class HomeFragment : Fragment() {
             adapter = popularItemsAdapter
         }
     }
-
+//we will get the data from the api wheneevr the data changes and put those changes in the data source
     private fun observePopularItemsLiveData() {
         homeMvvm.observePopularItemsLiveData().observe(viewLifecycleOwner,
          {
