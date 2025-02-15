@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.foodapp.db.MealDatabase
 import com.example.foodapp.pojo.Category
 import com.example.foodapp.pojo.CategoryList
@@ -13,6 +14,7 @@ import com.example.foodapp.pojo.MealsByCategory
 import com.example.foodapp.pojo.Meal
 import com.example.foodapp.pojo.MealList
 import com.example.foodapp.retrofit.RetrofitInstance
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -74,6 +76,18 @@ class HomeViewModel(
             }
 
         })
+    }
+    fun deleteMeal(meal:Meal)
+    {
+        viewModelScope.launch{
+            mealDatabase.mealDao().delete(meal)
+        }
+    }
+    fun insertMeal(meal:Meal)
+    {
+        viewModelScope.launch {
+            mealDatabase.mealDao().upsert(meal)
+        }
     }
     fun observeRandomMealLiveData():LiveData<Meal>
     {
