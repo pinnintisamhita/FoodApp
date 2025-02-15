@@ -11,6 +11,7 @@ import kotlin.collections.ArrayList
 
 class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealViewHolder>() {
     lateinit var onItemClick:((MealsByCategory) -> Unit)
+    var onLongItemClick:((MealsByCategory)->Unit)?=null
     private var mealsList = ArrayList<MealsByCategory>()
 
     fun setMeals(mealsList :ArrayList<MealsByCategory>){
@@ -29,6 +30,10 @@ class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealV
         Glide.with(holder.itemView).load(mealsList[position].strMealThumb).into(holder.binding.imgPopularMealItem)
         holder.itemView.setOnClickListener{
             onItemClick.invoke(mealsList[position])
+        }
+        holder.itemView.setOnLongClickListener{
+            onLongItemClick?.invoke(mealsList[position])
+            true
         }
     }
     class PopularMealViewHolder(val binding:PopularItemsBinding):RecyclerView.ViewHolder(binding.root)
