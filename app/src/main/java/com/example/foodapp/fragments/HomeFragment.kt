@@ -25,6 +25,7 @@ import com.example.foodapp.pojo.Meal
 import com.example.foodapp.viewModel.HomeViewModel
 
 
+
 class HomeFragment : Fragment() {
    private lateinit var binding:FragmentHomeBinding
    private lateinit var viewModel: HomeViewModel

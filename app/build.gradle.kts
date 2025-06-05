@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.espresso.contrib)
     val nav_version = "2.7.5"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -52,6 +53,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation("androidx.test:core:1.5.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation ("androidx.test:rules:1.5.0")
+    androidTestImplementation("androidx.fragment:fragment-testing:1.6.2")
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
+
+
 
 
     implementation("androidx.navigation:navigation-fragment:$nav_version")
@@ -76,6 +85,7 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
+
 
 
 
