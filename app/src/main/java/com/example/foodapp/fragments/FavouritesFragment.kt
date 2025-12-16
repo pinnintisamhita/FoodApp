@@ -1,5 +1,6 @@
 package com.example.foodapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodapp.activities.MainActivity
+import com.example.foodapp.activities.MealActivity
 import com.example.foodapp.adapters.MealsAdapter
 import com.example.foodapp.databinding.FragmentFavouritesBinding
 import com.example.foodapp.viewModel.HomeViewModel
@@ -62,7 +64,15 @@ class FavouritesFragment : Fragment() {
     }
 
     private fun prepareRecyclerView() {
-       favoritesAdapter = MealsAdapter()
+       favoritesAdapter = MealsAdapter().apply {
+           onItemClick ={
+               val intent = Intent(activity, MealActivity::class.java)
+               intent.putExtra(HomeFragment.MEAL_ID,it.idMeal)
+               intent.putExtra(HomeFragment.MEAL_NAME,it.strMeal)
+               intent.putExtra(HomeFragment.MEAL_THUMB,it.strMealThumb)
+               startActivity(intent)
+           }
+       }
         binding.rvFavorites.apply {
             layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
             adapter = favoritesAdapter

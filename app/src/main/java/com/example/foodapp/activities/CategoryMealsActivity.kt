@@ -1,10 +1,13 @@
 package com.example.foodapp.activities
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
@@ -40,7 +43,16 @@ class CategoryMealsActivity : AppCompatActivity() {
     }
 
     private fun prepareRecyclerView() {
-        categoryMealsAdapter = CategoryMealsAdapter()
+        categoryMealsAdapter = CategoryMealsAdapter().apply {
+            onItemClick={
+                val intent = Intent(this@CategoryMealsActivity, MealActivity::class.java)
+                intent.putExtra(HomeFragment.MEAL_ID,it.idMeal)
+                intent.putExtra(HomeFragment.MEAL_NAME,it.strMeal)
+                intent.putExtra(HomeFragment.MEAL_THUMB,it.strMealThumb)
+                startActivity(intent)
+
+            }
+        }
         binding.rvMeals.apply {
             layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
             adapter = categoryMealsAdapter

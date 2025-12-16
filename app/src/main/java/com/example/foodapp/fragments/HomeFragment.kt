@@ -112,7 +112,6 @@ class HomeFragment : Fragment() {
 
                  categoriesAdapter.setCategoryList( categories  )
 
-
         })
     }
 

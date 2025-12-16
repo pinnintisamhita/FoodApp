@@ -22,31 +22,25 @@ import retrofit2.Response
 class HomeViewModel(
     private val mealDatabase:MealDatabase
 ): ViewModel() {
-    private  var randomMealLiveData = MutableLiveData<Meal>()
+    var randomMealLiveData = MutableLiveData<Meal>()
     private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     private var categoriesLiveData = MutableLiveData<List<Category>>()
     private var favoritesMealsLiveData = mealDatabase.mealDao().getAllMeals()
     private var bottomSheetMealLiveData = MutableLiveData<Meal>()
     private var searchedMealsLiveData =  MutableLiveData<List<Meal>>()
     fun getRandomMeal(){
-        RetrofitInstance.api.getRandomMeal().enqueue(object: Callback<MealList> {
-            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-                if(response.body()!=null)
-                {
-                    val randomMeal: Meal =response.body()!!.meals[0]
-                    randomMealLiveData.value=randomMeal
+       viewModelScope.launch {
+           try {
+               val result = RetrofitInstance.api.getRandomMeal()
+               val randomMeal = result.meals[0]
+               randomMealLiveData.value = randomMeal
+           }catch (e:Exception)
+           {
+               Log.d("HomeFragment", e.message.toString())
+           }
+       }
 
-                    Log.d("samhita","meal id ${randomMeal.idMeal} name ${randomMeal.strMeal}")
-                }else{
-                    return
-                }
-            }
 
-            override fun onFailure(call: Call<MealList>, t: Throwable) {
-                Log.d("Homefragment",t.message.toString())
-            }
-
-        })
     }
     fun getPopularItems(){
        RetrofitInstance.api.getPopularItems("Seafood").enqueue(object:Callback<MealsByCategoryList>{

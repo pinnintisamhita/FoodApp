@@ -44,6 +44,9 @@ android {
 
 dependencies {
     implementation(libs.androidx.espresso.contrib)
+    implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     val nav_version = "2.7.5"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -59,6 +62,9 @@ dependencies {
     androidTestImplementation ("androidx.test:rules:1.5.0")
     androidTestImplementation("androidx.fragment:fragment-testing:1.6.2")
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
+    testImplementation ("org.mockito:mockito-core:5.2.0")
+    testImplementation ("org.mockito.kotlin:mockito-kotlin:5.2.1") // Kotlin-friendly
+    testImplementation ("junit:junit:4.13.2")
 
 
 
@@ -85,6 +91,8 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 
 
 

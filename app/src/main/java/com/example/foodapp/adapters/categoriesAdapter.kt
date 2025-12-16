@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.foodapp.databinding.CategoryItemBinding
 import com.example.foodapp.pojo.Category
 
-class CategoriesAdapter():RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
+class CategoriesAdapter :RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
 
     private var categoriesList = ArrayList<Category>()
     var onItemClick : ((Category) -> Unit)? = null
@@ -31,7 +31,7 @@ class CategoriesAdapter():RecyclerView.Adapter<CategoriesAdapter.CategoryViewHol
         Glide.with(holder.itemView).load(categoriesList[position].strCategoryThumb).into(holder.binding.imgCategory)
         holder.binding.tvCategoryName.text = categoriesList[position].strCategory
         holder.itemView.setOnClickListener{
-            onItemClick!!.invoke(categoriesList[position])
+            onItemClick?.invoke(categoriesList[position])
         }
     }
 }

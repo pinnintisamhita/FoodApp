@@ -4,13 +4,14 @@ import com.example.foodapp.pojo.CategoryList
 import com.example.foodapp.pojo.MealsByCategoryList
 import com.example.foodapp.pojo.MealList
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MealApi {
     //tells the retrofit that need to get data from the Api
     @GET("random.php")
-    fun getRandomMeal(): Call<MealList>
+    suspend fun getRandomMeal():MealList
 
     @GET("lookup.php?")
     fun getMealDetails(@Query("i") id:String) : Call<MealList>

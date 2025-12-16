@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.foodapp.databinding.MealItemBinding
 import com.example.foodapp.pojo.Meal
+import com.example.foodapp.pojo.MealsByCategory
 
 class MealsAdapter:RecyclerView.Adapter<MealsAdapter.FavoritesMealsAdapterViewHolder>() {
 
-
+     var onItemClick:((Meal)->Unit)?=null
     inner class FavoritesMealsAdapterViewHolder(val binding:MealItemBinding):RecyclerView.ViewHolder(binding.root)
 
     private val diffUtil = object:DiffUtil.ItemCallback<Meal>(){
@@ -40,6 +41,10 @@ class MealsAdapter:RecyclerView.Adapter<MealsAdapter.FavoritesMealsAdapterViewHo
         val meal = differ.currentList[position]
         Glide.with(holder.itemView).load(meal.strMealThumb).into(holder.binding.imgMeal)
         holder.binding.tvMealName.text = meal.strMeal
+        holder.itemView.setOnClickListener{
+            onItemClick?.invoke(meal)
+        }
+
     }
 
 }
